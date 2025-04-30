@@ -6,11 +6,15 @@ import BooksTable from "../components/home/BooksTable";
 import BooksCard from "../components/home/BooksCard";
 import { Link } from "react-router-dom";
 import { MdOutlineAddBox } from "react-icons/md";
+import { CiDark } from "react-icons/ci";
+import { MdDarkMode } from "react-icons/md";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showType, setShowType] = useState("table");
+  const [light, setLight] = useState(true);
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -26,10 +30,18 @@ const Home = () => {
       });
   }, []);
 
+  const appStyle = {
+    backgroundColor: !light ? 'black' : 'white',
+    color: !light ? 'white' : 'black',
+    minHeight: '100vh',
+    transition: '0.3s ease',
+  };
+
+
   console.log(books);
 
   return (
-    <div className="p-4">
+    <div className="p-4" style={appStyle}>
       <div className="flex justify-center items-center gap-x-4">
         <button
           className="bg-sky-300 hover:bg-sky-600 py-1 px-4 rounded-lg"
@@ -47,6 +59,14 @@ const Home = () => {
           }}
         >
           Card
+        </button>
+        <button
+          onClick={() => {
+            setLight(!light);
+            console.log(light);
+          }}
+        >
+          {light ? <CiDark /> : <MdDarkMode />}
         </button>
       </div>
 
